@@ -5,17 +5,20 @@ import model.PedestrianLight;
 import model.TrafficTimer;
 import model.TrafficTimerListener;
 
+
 public class TrafficController implements TrafficTimerListener {
     private final TrafficLight trafficLight;
     private final PedestrianLight pedestrianLight;
     private final TrafficTimer trafficTimer;
     private Runnable onLightChangeCallback;
+    private final TrafficLightHttpClient httpClient;
 
-    public TrafficController(TrafficLight trafficLight, PedestrianLight pedestrianLight, TrafficTimer trafficTimer) {
+    public TrafficController(TrafficLight trafficLight, PedestrianLight pedestrianLight, TrafficTimer trafficTimer, TrafficLightHttpClient httpClient) {
         this.trafficLight = trafficLight;
         this.pedestrianLight = pedestrianLight;
         this.trafficTimer = trafficTimer;
         this.trafficTimer.setListener(this);
+        this.httpClient = httpClient;
 
         initializeSystem();
     }
@@ -25,7 +28,6 @@ public class TrafficController implements TrafficTimerListener {
     }
 
     private void initializeSystem() {
-        // Initial state: cars have green, pedestrians have red
         trafficLight.turnGreen();
         pedestrianLight.turnRed();
     }
@@ -55,6 +57,7 @@ public class TrafficController implements TrafficTimerListener {
         pedestrianLight.turnGreen();
         System.out.println("Lights changed: Pedestrians Green, Cars Red");
         notifyUI();
+        httpClient.onChangeToPedestrianGreen();
     }
 
     @Override
@@ -63,6 +66,7 @@ public class TrafficController implements TrafficTimerListener {
         pedestrianLight.turnRed();
         System.out.println("Lights changed: Cars Green, Pedestrians Red");
         notifyUI();
+        httpClient.onReturnToCarGreen();
     }
 
     private void notifyUI() {

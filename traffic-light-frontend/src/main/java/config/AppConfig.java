@@ -1,5 +1,6 @@
 package config;
 
+import controller.TrafficLightHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -7,11 +8,17 @@ import model.TrafficLight;
 import model.PedestrianLight;
 import model.TrafficTimer;
 import controller.TrafficController;
+import org.springframework.web.client.RestTemplate;
 import view.MainFrame;
 
 @Configuration
 @ComponentScan(basePackages = {"view", "controller", "model"})
 public class AppConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     @Bean
     public TrafficLight trafficLight() {
@@ -29,8 +36,7 @@ public class AppConfig {
     }
 
     @Bean
-    public TrafficController trafficController() {
-        System.out.println("Beans created!");
-        return new TrafficController(trafficLight(), pedestrianLight(), trafficTimer());
+    public TrafficController trafficController(TrafficLightHttpClient httpClient) {
+        return new TrafficController(trafficLight(), pedestrianLight(), trafficTimer(), httpClient);
     }
 }

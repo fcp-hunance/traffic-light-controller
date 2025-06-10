@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane minHeight="350.0" minWidth="600.0" style="-fx-background-color: grau;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="350.0" minWidth="600.0" style="-fx-background-color: Lightgrey;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <HBox alignment="CENTER" layoutX="103.0" layoutY="27.0">
       <children>
          <SplitPane dividerPositions="0.23232323232323232" orientation="VERTICAL" prefWidth="160.0">
