@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane minHeight="350.0" minWidth="600.0" style="-fx-background-color: grau;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <HBox alignment="CENTER" layoutX="103.0" layoutY="27.0">
+      <children>
+         <SplitPane dividerPositions="0.23232323232323232" orientation="VERTICAL" prefWidth="160.0">
+           <items>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                  <children>
+                     <TextField accessibleRole="TEXT" alignment="CENTER" editable="false" focusTraversable="false" layoutX="5.0" layoutY="16.0" text="Traffic Light" AnchorPane.leftAnchor="5.0">
+                        <cursor>
+                           <Cursor fx:constant="DISAPPEAR" />
+                        </cursor>
+                     </TextField>
+                  </children>
+               </AnchorPane>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="149.0" prefWidth="158.0">
+                  <children>
+                      
+                                                
+                                                    <!-- Traffic Light -->
+                      <Group fx:id="trafficLight" layoutX="49.0" layoutY="16.0">
+                        <children>
+                             <Rectangle fill="BLACK" height="160" stroke="#7c7a7a" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="5.0" width="60" />
+                             <Circle fx:id="trafficRed" centerX="30" centerY="40" fill="RED" layoutY="-8.0" radius="20" />
+                             <Circle fx:id="trafficGreen" centerX="30" centerY="100" fill="DARKGRAY" layoutY="29.0" radius="20" />
+                             <Circle fx:id="trafficYellow" centerX="30" centerY="100" fill="DARKGRAY" layoutY="-20.0" radius="20" />
+                        </children>
+                      </Group>
+                  </children>
+               </AnchorPane>
+           </items>
+            <HBox.margin>
+               <Insets bottom="20.0" right="75.0" top="20.0" />
+            </HBox.margin>
+         </SplitPane>
+         <SplitPane dividerPositions="0.23232323232323232" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+            <items>
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                  <children>
+                     <TextField accessibleRole="TEXT" alignment="CENTER" editable="false" focusTraversable="false" layoutX="5.0" layoutY="16.0" prefHeight="25.0" prefWidth="149.0" text="Pedestrian Light">
+                        <cursor>
+                           <Cursor fx:constant="DISAPPEAR" />
+                        </cursor>
+                     </TextField>
+                  </children>
+               </AnchorPane>
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                  <children>
+                  
+                                                    <!-- Pedestrian Light -->
+                      <Group fx:id="pedestrianLight" layoutX="49.0" layoutY="35.0">
+                          <Rectangle fill="BLACK" height="122.0" stroke="#7c7a7a" strokeLineJoin="ROUND" strokeWidth="5.0" width="60.0" />
+                          <Circle fx:id="pedestrianRed" centerX="30" centerY="30" fill="RED" layoutY="5.0" radius="20" />
+                          <Circle fx:id="pedestrianGreen" centerX="30" centerY="70" fill="DARKGRAY" layoutY="17.0" radius="20" />
+                      </Group>
+                  </children>
+               </AnchorPane>
+            </items>
+            <HBox.margin>
+               <Insets bottom="20.0" top="20.0" />
+            </HBox.margin>
+         </SplitPane>
+      </children>
+   </HBox>
+</AnchorPane>
