@@ -32,11 +32,12 @@ public class AppConfig {
 
     @Bean
     public TrafficTimer trafficTimer() {
-        return new TrafficTimer(30, 10, 5); // Default values: carGreen=30s, pedestrianGreen=10s, delay=5s
+        return new TrafficTimer( 10, 5); // Default values: carGreen=30s, pedestrianGreen=10s, delay=5s
     }
 
     @Bean
     public TrafficController trafficController(TrafficLightHttpClient httpClient) {
+        httpClient.onSettingsUpdate();
         return new TrafficController(trafficLight(), pedestrianLight(), trafficTimer(), httpClient);
     }
 }
