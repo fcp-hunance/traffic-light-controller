@@ -39,12 +39,25 @@ The project consists of two main modules:
 
 [JavaFX GUI] ⇄ REST ⇄ [Spring Boot Backend] ⇄ MQTT ⇄ [ESP32 mit LED/Buzzer]
 
+### Java GUI to REST (settings in JSON)
+Endpoint POST Method (http://localhost:8080/traffic/settings)
+At start and each time when settings are updated.
+```json
+{
+    "pedestrianGreenDuration": 30,
+    "changeDelay": 5
+}
+```
+### Java GUI to REST (Pedestrian button pressed)
+Endpoint POST Method (http://localhost:8080/traffic/pedestrian)
+Each time when pedestrian button is pressed.
+
 ---
 
 ## 🚧 Next Steps / Goals
 
 - ✅ First GUI prototypes with graphical traffic light display.
-- ⏳ REST endpoints for controlling the traffic light (POST /traffic/light/{color}).
+- ⏳ REST endpoints for controlling the traffic light and settings (POST /traffic/).
 - ⏳ Configure MQTT connection to Mosquitto broker.
 - ⏳ Develop ESP32 firmware to process MQTT commands.
 - ✅ Display error handling and system feedback in the GUI.
