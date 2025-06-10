@@ -4,7 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TrafficTimer {
-    private int carGreenDuration; // seconds
     private int pedestrianGreenDuration; // seconds
     private int changeDelay; // seconds after button press
 
@@ -13,8 +12,7 @@ public class TrafficTimer {
 
     private TrafficTimerListener listener;
 
-    public TrafficTimer(int carGreenDuration, int pedestrianGreenDuration, int changeDelay) {
-        this.carGreenDuration = carGreenDuration;
+    public TrafficTimer(int pedestrianGreenDuration, int changeDelay) {
         this.pedestrianGreenDuration = pedestrianGreenDuration;
         this.changeDelay = changeDelay;
     }
@@ -60,8 +58,7 @@ public class TrafficTimer {
         }, changeDelay * 1000L);
     }
 
-    public void setDurations(int carGreen, int pedestrianGreen, int delay) {
-        this.carGreenDuration = carGreen;
+    public void setDurations(int pedestrianGreen, int delay) {
         this.pedestrianGreenDuration = pedestrianGreen;
         this.changeDelay = delay;
     }
@@ -71,7 +68,6 @@ public class TrafficTimer {
     }
 
     // Getters for durations
-    public int getCarGreenDuration() { return carGreenDuration; }
     public int getPedestrianGreenDuration() { return pedestrianGreenDuration; }
     public int getChangeDelay() { return changeDelay; }
 }

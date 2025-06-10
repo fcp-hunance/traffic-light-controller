@@ -2,23 +2,29 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import model.TrafficTimer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 public class TrafficLightHttpClient {
 
     private final RestTemplate restTemplate;
+    private final TrafficTimer trafficTimer;
 
-    public TrafficLightHttpClient(RestTemplate restTemplate) {
+    public TrafficLightHttpClient(RestTemplate restTemplate, TrafficTimer trafficTimer) {
         this.restTemplate = restTemplate;
+        this.trafficTimer = trafficTimer;
     }
 
-    public void sendPostRequest(String url) {
+    public void sendPostRequest(String url, Object requestBody) {
         try {
-            restTemplate.postForObject(url, null, String.class);
+            restTemplate.postForObject(url, requestBody, String.class);
             System.out.println("POST request sent to: " + url);
         } catch (ResourceAccessException e) {
             showErrorAlert("Connection Failed", "Could not reach the server. Check if the server is running.");
@@ -27,6 +33,10 @@ public class TrafficLightHttpClient {
         } catch (Exception e) {
             showErrorAlert("Unexpected Error", "Failed to send request: " + e.getMessage());
         }
+    }
+
+    public void sendPostRequest(String url) {
+        sendPostRequest(url, null);
     }
 
     private void showErrorAlert(String title, String message) {
@@ -39,11 +49,15 @@ public class TrafficLightHttpClient {
         });
     }
 
-    public void onChangeToPedestrianGreen() {
-        sendPostRequest("http://localhost:8080/traffic/light/red");
+    public void onChangePedestrianButtonPressed() {
+        sendPostRequest("http://localhost:8080/traffic/pedestrian");
     }
 
-    public void onReturnToCarGreen() {
-        sendPostRequest("http://localhost:8080/traffic/light/green");
+    public void onSettingsUpdate() {
+        System.out.println("Settings to server, "+trafficTimer.getPedestrianGreenDuration()+", "+trafficTimer.getChangeDelay());
+        Map<String, Integer> settings = new HashMap<>();
+        settings.put("pedestrianGreenDuration", trafficTimer.getPedestrianGreenDuration());
+        settings.put("changeDelay", trafficTimer.getChangeDelay());
+        sendPostRequest("http://localhost:8080/traffic/settings", settings);
     }
 }

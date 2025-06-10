@@ -11,7 +11,6 @@ import controller.TrafficController;
 public class SettingsDialog {
     private final TrafficController controller;
     private final Stage dialogStage;
-    private Spinner<Integer> carGreenSpinner;
     private Spinner<Integer> pedestrianGreenSpinner;
     private Spinner<Integer> delaySpinner;
 
@@ -29,12 +28,6 @@ public class SettingsDialog {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20));
-
-        // Car Green Duration
-        grid.add(new Label("Car Green Duration (sec):"), 0, 0);
-        carGreenSpinner = new Spinner<>(10, 120,
-                controller.getTrafficTimer().getCarGreenDuration(), 1);
-        grid.add(carGreenSpinner, 1, 0);
 
         // Pedestrian Green Duration
         grid.add(new Label("Pedestrian Green Duration (sec):"), 0, 1);
@@ -70,11 +63,10 @@ public class SettingsDialog {
     }
 
     private void saveSettings() {
-        int carGreen = carGreenSpinner.getValue();
         int pedestrianGreen = pedestrianGreenSpinner.getValue();
         int delay = delaySpinner.getValue();
 
-        controller.updateSettings(carGreen, pedestrianGreen, delay);
+        controller.updateSettings(pedestrianGreen, delay);
         dialogStage.close();
     }
 }
