@@ -39,8 +39,9 @@ public class TrafficController implements TrafficTimerListener {
         }
     }
 
-    public void updateSettings(int carGreenDuration, int pedestrianGreenDuration, int changeDelay) {
-        trafficTimer.setDurations(carGreenDuration, pedestrianGreenDuration, changeDelay);
+    public void updateSettings(int pedestrianGreenDuration, int changeDelay) {
+        trafficTimer.setDurations(pedestrianGreenDuration, changeDelay);
+        httpClient.onSettingsUpdate();
     }
 
     @Override
@@ -57,7 +58,7 @@ public class TrafficController implements TrafficTimerListener {
         pedestrianLight.turnGreen();
         System.out.println("Lights changed: Pedestrians Green, Cars Red");
         notifyUI();
-        httpClient.onChangeToPedestrianGreen();
+        httpClient.onChangePedestrianButtonPressed();
     }
 
     @Override
@@ -66,7 +67,6 @@ public class TrafficController implements TrafficTimerListener {
         pedestrianLight.turnRed();
         System.out.println("Lights changed: Cars Green, Pedestrians Red");
         notifyUI();
-        httpClient.onReturnToCarGreen();
     }
 
     private void notifyUI() {
