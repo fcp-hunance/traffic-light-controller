@@ -8,9 +8,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Component
 public class TrafficLightHttpClient {
 
@@ -55,9 +52,7 @@ public class TrafficLightHttpClient {
 
     public void onSettingsUpdate() {
         System.out.println("Settings to server, "+trafficTimer.getPedestrianGreenDuration()+", "+trafficTimer.getChangeDelay());
-        Map<String, Integer> settings = new HashMap<>();
-        settings.put("pedestrianGreenDuration", trafficTimer.getPedestrianGreenDuration());
-        settings.put("changeDelay", trafficTimer.getChangeDelay());
-        sendPostRequest("http://localhost:8080/traffic/settings", settings);
+        sendPostRequest("http://localhost:8080/traffic/settings/pedestrianGreenDuration", trafficTimer.getPedestrianGreenDuration());
+        sendPostRequest("http://localhost:8080/traffic/settings/changeDelay", trafficTimer.getChangeDelay());
     }
 }
