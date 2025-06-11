@@ -46,8 +46,12 @@ Sends initial and updated configuration from GUI to backend.
 Request Example:
 ```json
 {
-    "pedestrianGreenDuration": 10,
-    "changeDelay": 5
+    "pedestrianGreenDuration": 10
+}
+```
+```json
+{
+  "changeDelay": 5
 }
 ```
 ### 🚶 Pedestrian Request (POST /traffic/pedestrian)

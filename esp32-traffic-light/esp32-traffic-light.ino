@@ -18,10 +18,12 @@ const int trafficYellow = 19;  // GPIO19
 const int trafficGreen = 21;   // GPIO21
 const int pedRed = 22;         // GPIO22
 const int pedGreen = 23;       // GPIO23
+const int blueLight = 5;       // GPIO05
 
 // Timing Variables
 int pedestrianGreenDuration = 10;  // Default: 10 seconds
 int changeDelay = 3;              // Default: 3 seconds delay
+const int blueBlinkInterval = 500
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -35,6 +37,7 @@ void setup() {
   pinMode(trafficGreen, OUTPUT);
   pinMode(pedRed, OUTPUT);
   pinMode(pedGreen, OUTPUT);
+  pinMode(blueLight, OUTPUT);
   
   // Initialize with traffic green, pedestrian red
   setTrafficLight(false, false, true);
@@ -50,6 +53,24 @@ void loop() {
     reconnectMQTT();
   }
   client.loop();
+}
+
+// Blinking Blue Light Function
+void blinkBlueLight(bool &keepBlinking) {
+  static unsigned long previousMillis = 0;
+  static bool ledState = LOW;
+  
+  unsigned long currentMillis = millis();
+  
+  if (currentMillis - previousMillis >= blueBlinkInterval) {
+    previousMillis = currentMillis;
+    ledState = !ledState;
+    digitalWrite(blueLight, ledState);
+  }
+  
+  if (!keepBlinking) {
+    digitalWrite(blueLight, LOW);
+  }
 }
 
 // LED Control Functions
@@ -121,13 +142,26 @@ void callback(char* topic, byte* payload, unsigned int length) {
 // Pedestrian Crossing Sequence
 void pedestrianSequence() {
   Serial.println("Starting pedestrian sequence...");
+  bool shouldBlink = true;
   
-  // Initial delay
-  delay(changeDelay * 1000);
+  // Initial delay with blinking blue light
+  unsigned long startTime = millis();
+  while (millis() - startTime < changeDelay * 1000) {
+    blinkBlueLight(shouldBlink);
+    delay(10); // Small delay to prevent watchdog trigger
+  }
   
-  // Yellow light
+  // Yellow light with blinking blue light
   setTrafficLight(false, true, false);
-  delay(5000);
+  startTime = millis();
+  while (millis() - startTime < 5000) {
+    blinkBlueLight(shouldBlink);
+    delay(10);
+  }
+  
+  // Stop blinking and turn off blue light
+  shouldBlink = false;
+  digitalWrite(blueLight, LOW);
   
   // Red traffic light, green pedestrian
   setTrafficLight(true, false, false);
