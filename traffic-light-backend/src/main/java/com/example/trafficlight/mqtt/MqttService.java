@@ -1,5 +1,7 @@
 package com.example.trafficlight.mqtt;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.eclipse.paho.client.mqttv3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +14,13 @@ import org.springframework.stereotype.Service;
 public class MqttService {
     private static final Logger logger = LoggerFactory.getLogger(MqttService.class);
 
-    @Value("${mqtt.broker.url:tcp://192.168.0.112:1883}")  // Korrigiert!
+    @Value("${mqtt.broker.url:tcp://192.168.0.112:1883}")
     private String brokerUrl;
 
     private MqttClient client;
 
-    @Bean
+    // Diese Methode ist KEINE Bean, sondern ein Init-Methodenaufruf
+    @PostConstruct
     public void init() {
         try {
             String clientId = "TrafficLightClient-" + System.currentTimeMillis();
@@ -50,7 +53,7 @@ public class MqttService {
         }
     }
 
-    @Bean(destroyMethod = "cleanup")
+    @PreDestroy
     public void cleanup() {
         if (client != null && client.isConnected()) {
             try {
@@ -62,5 +65,4 @@ public class MqttService {
             }
         }
     }
-
 }
