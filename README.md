@@ -27,7 +27,7 @@ The project consists of two main modules:
 
 ## 📦 Features
 
-- Graphical control of the traffic light (RED, YELLOW, GREEN) including a sequence mode.
+- Graphical control of the traffic light (RED, YELLOW, GREEN) with sequence settings.
 - REST interface between the JavaFX application and the Spring Boot backend.
 - MQTT communication from the backend to the ESP32.
 - Real-time visualization of the current traffic light status in the GUI.
@@ -43,11 +43,11 @@ The project consists of two main modules:
 
 ## 🚧 Next Steps / Goals
 
-- [ ] First GUI prototypes with graphical traffic light display.
-- [ ] REST endpoints for controlling the traffic light (POST /traffic/light/{color}).
-- [ ] Configure MQTT connection to Mosquitto broker.
-- [ ] Develop ESP32 firmware to process MQTT commands.
-- [ ] Display error handling and system feedback in the GUI.
+- ✅ First GUI prototypes with graphical traffic light display.
+- ⏳ REST endpoints for controlling the traffic light (POST /traffic/light/{color}).
+- ⏳ Configure MQTT connection to Mosquitto broker.
+- ⏳ Develop ESP32 firmware to process MQTT commands.
+- ✅ Display error handling and system feedback in the GUI.
 
 ---
 
