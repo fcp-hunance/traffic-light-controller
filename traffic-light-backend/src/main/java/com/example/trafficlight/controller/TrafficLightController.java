@@ -25,7 +25,7 @@ public class TrafficLightController {
     @PostMapping("/settings/pedestrianGreenDuration")
     public ResponseEntity<String> setPedestrianDuration(@RequestBody java.util.Map<String, Integer> request) {
         int duration = request.get("pedestrianGreenDuration");
-        mqttService.publish("traffic/settings/pedestrianGreenDuration", String.valueOf(duration));
+        mqttService.publish("traffic/settings/greenDuration", String.valueOf(duration));
         return ResponseEntity.ok("Pedestrian Green Duration set to " + duration);
     }
 
