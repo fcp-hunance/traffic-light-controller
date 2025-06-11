@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class MqttService {
     private static final Logger logger = LoggerFactory.getLogger(MqttService.class);
 
-    @Value("${mqtt.broker.url:tcp://localhost:1883}")
+    @Value("${mqtt.broker.url:tcp://192.168.0.112:1883}")
     private String brokerUrl;
 
     private MqttClient client;

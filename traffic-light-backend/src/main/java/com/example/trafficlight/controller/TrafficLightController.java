@@ -22,8 +22,6 @@ public class TrafficLightController {
     }
 
 
-
-
 // Klasse und DurationÜbergabe an MQTT
 
 

@@ -33,15 +33,17 @@ public class TrafficController implements TrafficTimerListener {
     }
 
     public void pedestrianButtonPressed() {
-        System.out.println("Pedestrian Button pressed!");
-        if (trafficLight.isGreen() && !trafficTimer.isChanging()) {
-            trafficTimer.startSequence();
-        }
+        trafficTimer.startSequence();
     }
 
     public void updateSettings(int pedestrianGreenDuration, int changeDelay) {
         trafficTimer.setDurations(pedestrianGreenDuration, changeDelay);
         httpClient.onSettingsUpdate();
+    }
+    @Override
+    public void onPressedPedestrianButton() {
+        System.out.println("Pedestrian button pressed!");
+        httpClient.onChangePedestrianButtonPressed();
     }
 
     @Override
