@@ -72,7 +72,6 @@ public class TrafficController implements TrafficTimerListener {
         pedestrianLight.turnGreen();
         System.out.println("Lights changed: Pedestrians Green, Cars Red");
         notifyUI();
-        httpClient.onChangePedestrianButtonPressed();
     }
 
     @Override
