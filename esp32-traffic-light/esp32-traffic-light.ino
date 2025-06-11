@@ -23,7 +23,7 @@ const int blueLight = 5;       // GPIO05
 // Timing Variables
 int pedestrianGreenDuration = 10;  // Default: 10 seconds
 int changeDelay = 3;              // Default: 3 seconds delay
-const int blueBlinkInterval = 500
+const int blueBlinkInterval = 500;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
