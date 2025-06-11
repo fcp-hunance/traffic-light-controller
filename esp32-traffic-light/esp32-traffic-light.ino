@@ -49,9 +49,7 @@ void setup() {
 }
 
 void loop() {
-  if (!client.connected()) {
-    reconnectMQTT();
-  }
+  if (!client.connected()) reconnectMQTT();
   client.loop();
 }
 
@@ -119,6 +117,7 @@ void reconnectMQTT() {
 
 // MQTT Message Handler
 void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.println("Callback called!");
   String message;
   for (int i = 0; i < length; i++) {
     message += (char)payload[i];
@@ -139,10 +138,26 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
 }
 
+void unsubscribeAll() {
+  client.unsubscribe(topic_pedestrian_trigger);
+  client.unsubscribe(topic_settings_green_duration);
+  client.unsubscribe(topic_settings_change_delay);
+  Serial.println("Unsubscribed from all topics");
+}
+
+void resubscribeAll() {
+  client.subscribe(topic_pedestrian_trigger);
+  client.subscribe(topic_settings_green_duration);
+  client.subscribe(topic_settings_change_delay);
+  Serial.println("Resubscribed to all topics");
+}
+
 // Pedestrian Crossing Sequence
 void pedestrianSequence() {
   Serial.println("Starting pedestrian sequence...");
+  
   bool shouldBlink = true;
+  unsubscribeAll();
   
   // Initial delay with blinking blue light
   unsigned long startTime = millis();
@@ -172,5 +187,6 @@ void pedestrianSequence() {
   setTrafficLight(false, false, true);
   setPedestrianLight(true, false);
   
+  resubscribeAll();
   Serial.println("Pedestrian sequence completed");
 }

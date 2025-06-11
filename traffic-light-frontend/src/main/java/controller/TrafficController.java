@@ -1,11 +1,13 @@
 package controller;
 
+import jakarta.annotation.PostConstruct;
 import model.TrafficLight;
 import model.PedestrianLight;
 import model.TrafficTimer;
 import model.TrafficTimerListener;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class TrafficController implements TrafficTimerListener {
     private final TrafficLight trafficLight;
     private final PedestrianLight pedestrianLight;
@@ -27,21 +29,33 @@ public class TrafficController implements TrafficTimerListener {
         this.onLightChangeCallback = callback;
     }
 
+    @PostConstruct
     private void initializeSystem() {
         trafficLight.turnGreen();
         pedestrianLight.turnRed();
     }
 
-    public void pedestrianButtonPressed() {
-        System.out.println("Pedestrian Button pressed!");
-        if (trafficLight.isGreen() && !trafficTimer.isChanging()) {
-            trafficTimer.startSequence();
+    public void initializeAfterStartup() {
+        System.out.println("Explicit initialization called!");
+        try {
+            httpClient.onSettingsUpdate();
+        } catch (Exception e) {
+            httpClient.showErrorAlert("Initialization error", e.getMessage());
         }
+    }
+
+    public void pedestrianButtonPressed() {
+        trafficTimer.startSequence();
     }
 
     public void updateSettings(int pedestrianGreenDuration, int changeDelay) {
         trafficTimer.setDurations(pedestrianGreenDuration, changeDelay);
         httpClient.onSettingsUpdate();
+    }
+    @Override
+    public void onPressedPedestrianButton() {
+        System.out.println("Pedestrian button pressed!");
+        httpClient.onChangePedestrianButtonPressed();
     }
 
     @Override
@@ -58,7 +72,6 @@ public class TrafficController implements TrafficTimerListener {
         pedestrianLight.turnGreen();
         System.out.println("Lights changed: Pedestrians Green, Cars Red");
         notifyUI();
-        httpClient.onChangePedestrianButtonPressed();
     }
 
     @Override

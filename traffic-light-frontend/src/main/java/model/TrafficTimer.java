@@ -25,6 +25,7 @@ public class TrafficTimer {
         if (isChanging) return;
 
         isChanging = true;
+        listener.onPressedPedestrianButton();
         timer = new Timer();
 
         // After the delay, change lights to pedestrian green

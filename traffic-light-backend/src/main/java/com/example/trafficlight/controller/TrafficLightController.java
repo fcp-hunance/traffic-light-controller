@@ -14,67 +14,30 @@ public class TrafficLightController {
         this.mqttService = mqttService;
     }
 
-
+    // The HTTP request reaches the Spring controller, which publishes a message to the MQTT topic.
     @PostMapping("/pedestrian")
     public ResponseEntity<String> pedestrianButtonPressed() {
         mqttService.publish("traffic/pedestrian", "");
         return ResponseEntity.ok("Pedestrian button pressed");
     }
 
+    // The HTTP request reaches the Spring controller, which receives a JSON payload as a Map, extracts the green light duration, and publishes it to the MQTT broker.
+    @PostMapping("/settings/pedestrianGreenDuration")
+    public ResponseEntity<String> setPedestrianDuration(@RequestBody java.util.Map<String, Integer> request) {
+        int duration = request.get("pedestrianGreenDuration");
+        mqttService.publish("traffic/settings/greenDuration", String.valueOf(duration));
+        return ResponseEntity.ok("Pedestrian Green Duration set to " + duration);
+    }
 
+    // The HTTP request reaches the Spring controller, which receives a JSON payload as a Map, extracts the change of the delay, and publishes it to the MQTT broker.
+    @PostMapping("/settings/changeDelay")
+    public ResponseEntity<String> setChangeDelay(@RequestBody java.util.Map<String, Integer> request) {
+        int delay = request.get("changeDelay");
+        mqttService.publish("traffic/settings/changeDelay", String.valueOf(delay));
+        return ResponseEntity.ok("Change Delay set to " + delay);
+    }
 
-
-// Klasse und DurationÜbergabe an MQTT
-
-
-                public static class PedestrianGreenDurationRequest {
-                    private int pedestrianGreen;
-
-                    public int getPedestrianGreen() {
-                        return pedestrianGreen;
-                    }
-
-                    public void setPedestrianGreen(int pedestrianGreen) {
-                        this.pedestrianGreen = pedestrianGreen;
-                    }
-                }
-
-                @PostMapping ("/settings/pedestrianGreenDuration")
-                public ResponseEntity<String> pedestrianGreenDuration(@RequestBody PedestrianGreenDurationRequest request){
-                    int duration = request.getPedestrianGreen();
-                    mqttService.publish("traffic//settings/pedestrianGreenDuration",String.valueOf(duration));
-                    return ResponseEntity.ok("Delay Changed to " + String.valueOf(duration));
-                }
-
-
-
-
-
-// Klasse und Delayübergabe an MQTT
-
-                public static class ChangeDelayRequest {
-                    private int delay;
-
-                    public int getChangeDelay() {
-                        return delay;
-                    }
-
-                    public void setChangeDelay(int delayRequest) {
-                        this.delay = delayRequest;
-                    }
-                }
-
-
-                @PostMapping ("/settings/changeDelay")
-                public ResponseEntity<String> changeDelay(@RequestBody ChangeDelayRequest request){
-                    int delay = request.getChangeDelay();
-                    mqttService.publish("traffic/settings/changeDelay",String.valueOf(delay));
-                    return ResponseEntity.ok("Delay Changed to " + String.valueOf(delay));
-                }
-
-
-
-
+    // A Ping for testing reasons.
     @GetMapping("/ping")
     public String ping() {
         return "Server is running!";

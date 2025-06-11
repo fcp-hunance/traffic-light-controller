@@ -107,8 +107,8 @@ LEDs and buzzer should react according to messages.
 ## 🚧 Next Steps / Goals
 
 - ✅ First GUI prototypes with graphical traffic light display.
-- ⏳ REST endpoints for controlling the traffic light and settings (POST /traffic/).
-- ⏳ Configure MQTT connection to Mosquitto broker.
+- ✅ REST endpoints for controlling the traffic light and settings (POST /traffic/).
+- ✅ Configure MQTT connection to Mosquitto broker.
 - ✅ Develop ESP32 firmware to process MQTT commands.
 - ✅ Display error handling and system feedback in the GUI.
 - 🔜 Advanced traffic logic (e.g., automatic cycles, traffic sensors).
