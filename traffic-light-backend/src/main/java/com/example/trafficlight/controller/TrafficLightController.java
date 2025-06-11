@@ -15,7 +15,7 @@ public class TrafficLightController {
     }
 
 
-    @GetMapping("/pedestrian")
+    @PostMapping("/pedestrian")
     public ResponseEntity<String> pedestrianButtonPressed() {
         mqttService.publish("traffic/pedestrian", "");
         return ResponseEntity.ok("Pedestrian button pressed");
