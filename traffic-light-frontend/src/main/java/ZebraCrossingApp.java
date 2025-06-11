@@ -1,3 +1,4 @@
+import controller.TrafficController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -14,6 +15,10 @@ public class ZebraCrossingApp extends Application {
 
         // Launch JavaFX application
         launch(args);
+
+        // Manually trigger initialization after context is ready
+        TrafficController controller = context.getBean(TrafficController.class);
+        controller.initializeAfterStartup(); // Call this instead of relying on ApplicationReadyEvent
     }
 
     @Override

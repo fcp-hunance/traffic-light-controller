@@ -37,7 +37,6 @@ public class AppConfig {
 
     @Bean
     public TrafficController trafficController(TrafficLightHttpClient httpClient) {
-        httpClient.onSettingsUpdate();
         return new TrafficController(trafficLight(), pedestrianLight(), trafficTimer(), httpClient);
     }
 }

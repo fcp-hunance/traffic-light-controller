@@ -36,7 +36,7 @@ public class TrafficLightHttpClient {
         sendPostRequest(url, null);
     }
 
-    private void showErrorAlert(String title, String message) {
+    public void showErrorAlert(String title, String message) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(title);

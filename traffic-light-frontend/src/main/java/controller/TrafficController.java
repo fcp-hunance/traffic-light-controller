@@ -1,11 +1,13 @@
 package controller;
 
+import jakarta.annotation.PostConstruct;
 import model.TrafficLight;
 import model.PedestrianLight;
 import model.TrafficTimer;
 import model.TrafficTimerListener;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class TrafficController implements TrafficTimerListener {
     private final TrafficLight trafficLight;
     private final PedestrianLight pedestrianLight;
@@ -27,9 +29,19 @@ public class TrafficController implements TrafficTimerListener {
         this.onLightChangeCallback = callback;
     }
 
+    @PostConstruct
     private void initializeSystem() {
         trafficLight.turnGreen();
         pedestrianLight.turnRed();
+    }
+
+    public void initializeAfterStartup() {
+        System.out.println("Explicit initialization called!");
+        try {
+            httpClient.onSettingsUpdate();
+        } catch (Exception e) {
+            httpClient.showErrorAlert("Initialization error", e.getMessage());
+        }
     }
 
     public void pedestrianButtonPressed() {
